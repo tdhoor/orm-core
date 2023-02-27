@@ -6,24 +6,24 @@ export interface ICrudController<T> {
      * POST /api/endpoint
      * @param data 
      */
-    createOne(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<TestResultResponse<T>>;
+    createOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
      * GET /api/endpoint/:id
      * @param id 
      */
-    getOne(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<TestResultResponse<T>>;
+    getOneById(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
      * GET /api/endpoint
      */
-    getAll(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<TestResultResponse<T[]>>;
+    getAll(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
      * UPDATE /api/endpoint
      * @param data 
      */
-    updateOne(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<TestResultResponse<T>>;
+    updateOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
      * DELETE /api/endpoint
      * @param data 
      */
-    deleteOne(req: Express.Request, res: Express.Response, next: Express.NextFunction): Promise<TestResultResponse<T>>;
+    deleteOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
 }
