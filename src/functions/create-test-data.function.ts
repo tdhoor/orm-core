@@ -19,20 +19,24 @@ function createOrders(amount: number, amountOfCustomer: number, amountOfProducts
     return createMock.orders(amount, amountOfCustomer, products);
 }
 
-function createCategoryNames(amount: number) {
-    return createMock.productCategories(amount).map((category) => category.name);
+function createCategoryNames(amount: number, amountOfCategories: number) {
+    const categories = createMock.productCategories(amountOfCategories);
+    const set = createRndSet(amount, amountOfCategories);
+    return Array.from(set.values()).map((rnd) => categories[rnd].name);
 }
 
 function createCustomerIds(amount: number, amountOfCustomers: number) {
-    return createRndSet(amount, amountOfCustomers);
+    const set = createRndSet(amount, amountOfCustomers);
+    return Array.from(set.values());
 }
 
 function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
     const ids = createRndSet(amount, maxId);
 
-    return Array.from(ids.values()).map((id, i) => {
-        const customer = createMock.customer(id);
-        customer.phone = customer.phone + i;
+    return Array.from(ids.values()).map((id) => {
+        const customer = createMock.customer(id + 1);
+        customer.id = id + 1;
+        customer.phone = customer.phone + customer.id;
         return customer;
     })
 }
@@ -40,24 +44,28 @@ function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
 function createProductCategoriesWithNewNames(amount: number, maxId: number) {
     const ids = createRndSet(amount, maxId);
 
-    return Array.from(ids.values()).map((id, i) => {
-        const category = createMock.productCategory(id);
-        category.name = category.name + i;
+    return Array.from(ids.values()).map((id) => {
+        const category = createMock.productCategory(id + 1);
+        category.id = id + 1;
+        category.name = category.name + category.id;
         return category;
     })
 }
 
 function createCustomerIdsToDelete(amount: number, maxId: number) {
-    return createRndSet(amount, maxId);
+    const set = createRndSet(amount, maxId);
+    return Array.from(set.values());
 }
 
 function createOrderIdsToDelete(amount: number, maxId: number) {
-    return createRndSet(amount, maxId);
+    const set = createRndSet(amount, maxId);
+    return Array.from(set.values());
 }
 
 export const createTestData = {
     create: {
         customers: createCustomers,
+        products: createProducts,
         customersWithAddress: createCustomersWithAddress,
         orders: createOrders
     },
