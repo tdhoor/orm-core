@@ -1,5 +1,6 @@
 import { createMock } from "./create-entity-mock.function";
-import { createRndSet } from "./create-rnd-set.function";
+import { rndNumberArray } from "./rnd-number-array.function";
+import { rndNumberSet } from "./rnd-number-set.function";
 
 function createCustomers(amount: number) {
     return createMock.customers(amount);
@@ -21,17 +22,17 @@ function createOrders(amount: number, amountOfCustomer: number, amountOfProducts
 
 function createCategoryNames(amount: number, amountOfCategories: number) {
     const categories = createMock.productCategories(amountOfCategories);
-    const set = createRndSet(amount, amountOfCategories);
+    const set = rndNumberSet(amount, amountOfCategories);
     return Array.from(set.values()).map((rnd) => categories[rnd].name);
 }
 
 function createCustomerIds(amount: number, amountOfCustomers: number) {
-    const set = createRndSet(amount, amountOfCustomers);
+    const set = rndNumberSet(amount, amountOfCustomers);
     return Array.from(set.values());
 }
 
 function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
-    const ids = createRndSet(amount, maxId);
+    const ids = rndNumberSet(amount, maxId);
 
     return Array.from(ids.values()).map((id) => {
         const customer = createMock.customer(id + 1);
@@ -42,9 +43,9 @@ function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
 }
 
 function createProductCategoriesWithNewNames(amount: number, maxId: number) {
-    const ids = createRndSet(amount, maxId);
+    const ids = rndNumberArray(amount, maxId);
 
-    return Array.from(ids.values()).map((id) => {
+    return ids.map((id) => {
         const category = createMock.productCategory(id + 1);
         category.id = id + 1;
         category.name = category.name + category.id;
@@ -53,12 +54,12 @@ function createProductCategoriesWithNewNames(amount: number, maxId: number) {
 }
 
 function createCustomerIdsToDelete(amount: number, maxId: number) {
-    const set = createRndSet(amount, maxId);
+    const set = rndNumberSet(amount, maxId);
     return Array.from(set.values());
 }
 
 function createOrderIdsToDelete(amount: number, maxId: number) {
-    const set = createRndSet(amount, maxId);
+    const set = rndNumberSet(amount, maxId);
     return Array.from(set.values());
 }
 
