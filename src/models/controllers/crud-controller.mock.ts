@@ -25,5 +25,5 @@ export interface ICrudController<T> {
      * DELETE /api/endpoint
      * @param data 
      */
-    deleteOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
+    deleteOneById(req: Express.Request, res: Express.Response, next: Express.NextFunction);
 }

@@ -45,7 +45,9 @@ function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
     });
 }
 
-function createOrders(amount: number, amountOfCustomer: number, products: IProduct[]): IOrder[] {
+function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[] = []): IOrder[] {
+    const customerIds = Array.from({ length: amount }).map((_, i) => i + 1);
+
     return Array.from({ length: amount }).map((_) => {
         const [rnd1, rnd2] = rndTuble(products.length);
 
@@ -57,7 +59,7 @@ function createOrders(amount: number, amountOfCustomer: number, products: IProdu
 
         const order: IOrder = {
             totalPrice: (orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price),
-            customerId: rndNumber(amountOfCustomer) + 1,
+            customerId: amountOfCustomer ? rndNumber(amountOfCustomer) + 1 : customerIds.splice(rndNumber(customerIds.length), 1)[0],
             orderItems: [orderItem1, orderItem2]
         }
         return order;
