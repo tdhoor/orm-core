@@ -1,4 +1,7 @@
 export interface TestResultResponse<T> {
-    data: T;
     time: number;
+    size: {
+        [entify: string]: number
+    }
+    data: T;
 }
