@@ -17,9 +17,12 @@ function createAddress(i: number): IAddress {
 }
 
 function createAddresses(amount: number): IAddress[] {
-    return Array.from({ length: amount }).map((_, i) => {
-        return createAddress(i + 1);
-    })
+    const arr = [];
+
+    for (let i = 0; i < amount; i++) {
+        arr.push(createAddress(i + 1));
+    }
+    return arr;
 }
 
 function createCustomer(i: number, address?: IAddress): ICustomer {
@@ -37,18 +40,29 @@ function createCustomer(i: number, address?: IAddress): ICustomer {
 }
 
 function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
-    return Array.from({ length: amount }).map((_, i) => {
-        if (Array.isArray(addresses)) {
-            return createCustomer(i + 1, addresses[i]);
+    const arr = [];
+
+    if (Array.isArray(addresses)) {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createCustomer(i + 1, addresses.splice(rndNumber(addresses.length), 1)[0]));
         }
-        return createCustomer(i + 1, null);
-    });
+    } else {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createCustomer(i + 1));
+        }
+    }
+    return arr;
 }
 
 function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[] = []): IOrder[] {
-    const customerIds = Array.from({ length: amount }).map((_, i) => i + 1);
+    const customerIds = [];
+    const arr = [];
 
-    return Array.from({ length: amount }).map((_) => {
+    for (let i = 0; i < amount; i++) {
+        customerIds.push(i + 1);
+    }
+
+    for (let i = 0; i < amount; i++) {
         const [rnd1, rnd2] = rndTuble(products.length);
 
         const product1 = products[rnd1];
@@ -57,13 +71,13 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
         const orderItem1: IOrderItem = { quantity: rndNumber(5), productId: rnd1 + 1 }
         const orderItem2: IOrderItem = { quantity: rndNumber(5), productId: rnd2 + 1 }
 
-        const order: IOrder = {
+        arr.push({
             totalPrice: (orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price),
             customerId: amountOfCustomer ? rndNumber(amountOfCustomer) + 1 : customerIds.splice(rndNumber(customerIds.length), 1)[0],
             orderItems: [orderItem1, orderItem2]
-        }
-        return order;
-    });
+        })
+    }
+    return arr;
 }
 
 function createProduct(i: number, category?: IProductCategory): IProduct {
@@ -79,12 +93,18 @@ function createProduct(i: number, category?: IProductCategory): IProduct {
 }
 
 function createProducts(amount: number, categories?: IProductCategory[]): IProduct[] {
-    return Array.from({ length: amount }).map((_, i) => {
-        if (Array.isArray(categories)) {
-            return createProduct(i + 1, categories[rndNumber(categories.length) - 1]);
+    const arr = [];
+
+    if (Array.isArray(categories)) {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createProduct(i + 1, categories[rndNumber(categories.length) - 1]));
         }
-        return createProduct(i + 1, null);
-    });
+    } else {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createProduct(i + 1, null));
+        }
+    }
+    return arr;
 }
 
 function createProductCategory(i: number): IProductCategory {
@@ -94,9 +114,11 @@ function createProductCategory(i: number): IProductCategory {
 }
 
 function createProductCategories(amount: number): IProductCategory[] {
-    return Array.from({ length: amount }).map((_, i) => {
-        return createProductCategory(i);
-    });
+    const arr = [];
+    for (let i = 0; i < amount; i++) {
+        arr.push(createProductCategory(i + 1));
+    }
+    return arr;
 }
 
 export const createMock = {

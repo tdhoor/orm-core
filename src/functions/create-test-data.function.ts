@@ -27,39 +27,39 @@ function createCategoryNames(amount: number, amountOfCategories: number) {
 }
 
 function createCustomerIds(amount: number, amountOfCustomers: number) {
-    const set = rndNumberSet(amount, amountOfCustomers);
+    const set = rndNumberSet(amount, amountOfCustomers, 1);
     return Array.from(set.values());
 }
 
 function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
-    const ids = rndNumberSet(amount, maxId);
+    const ids = rndNumberSet(amount, maxId, 1);
 
     return Array.from(ids.values()).map((id) => {
-        const customer = createMock.customer(id + 1);
-        customer.id = id + 1;
+        const customer = createMock.customer(id);
+        customer.id = id;
         customer.phone = customer.phone + customer.id;
         return customer;
     })
 }
 
 function createProductCategoriesWithNewNames(amount: number, maxId: number) {
-    const ids = rndNumberArray(amount, maxId);
+    const ids = rndNumberArray(amount, maxId, 1);
 
     return ids.map((id) => {
-        const category = createMock.productCategory(id + 1);
-        category.id = id + 1;
+        const category = createMock.productCategory(id);
+        category.id = id;
         category.name = category.name + category.id;
         return category;
     })
 }
 
 function createCustomerIdsToDelete(amount: number, maxId: number) {
-    const set = rndNumberSet(amount, maxId);
+    const set = rndNumberSet(amount, maxId, 1);
     return Array.from(set.values());
 }
 
 function createOrderIdsToDelete(amount: number, maxId: number) {
-    const set = rndNumberSet(amount, maxId);
+    const set = rndNumberSet(amount, maxId, 1);
     return Array.from(set.values());
 }
 
