@@ -1,11 +1,10 @@
-import { ICustomer } from "../entities/customer.model";
 import { ICrudController } from "./crud-controller.mock";
 import { NextFunction, Request, Response } from "express";
 
-export interface ICustomerController extends ICrudController<ICustomer> {
+export interface ICustomerController extends ICrudController {
     /**
      * POST /customers
-     * @param customer 
+     * @body data 
      */
     createMany(req: Request, res: Response, next: NextFunction)
     /**
