@@ -18,8 +18,8 @@ function createAddress(i: number, customerId: number | null = null): IAddress {
 }
 
 function createAddresses(amount: number): IAddress[] {
-    const arr = [];
-    const customerIds = [];
+    const arr: IAddress[] = [];
+    const customerIds: number[] = [];
 
     for (let i = 0; i < amount; i++) {
         customerIds.push(i + 1);
@@ -43,7 +43,7 @@ function createCustomer(i: number): ICustomer {
 }
 
 function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
-    const arr = [];
+    const arr: ICustomer[] = [];
 
     if (Array.isArray(addresses)) {
         for (let i = 0; i < amount; i++) {
@@ -58,9 +58,9 @@ function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
 }
 
 function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[] = []): { orders: IOrder[], orderItems: IOrderItem[] } {
-    const customerIds = [];
-    const orders = [];
-    const orderItems = [];
+    const customerIds: number[] = [];
+    const orders: IOrder[] = [];
+    const orderItems: IOrderItem[] = [];
 
     for (let i = 0; i < amount; i++) {
         customerIds.push(i + 1);
@@ -72,27 +72,13 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
         const product1 = products[rnd1];
         const product2 = products[rnd2];
 
-<<<<<<< HEAD
         const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1 }
         const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1 }
-=======
-        const orderItem1: IOrderItem = { quantity: rndNumber(5), productId: rnd1 + 1, orderId: i + 1 }
-        const orderItem2: IOrderItem = { quantity: rndNumber(5), productId: rnd2 + 1, orderId: i + 1 }
-
-        orderItems.push(orderItem1);
-        orderItems.push(orderItem2);
->>>>>>> c0708f28ac27eeb7eddb56a0a60164e293c12547
-
-        let id = amountOfCustomer ? rndNumber(amountOfCustomer) + 1 : customerIds.splice(rndNumber(customerIds.length), 1)[0] || customerIds[0];
 
         orders.push({
             totalPrice: (orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price),
-<<<<<<< HEAD
-            customerId: amountOfCustomer ? rndNumber(amountOfCustomer, 1) : customerIds.splice(rndNumber(customerIds.length), 1)[0],
+            customerId: amountOfCustomer ? rndNumber(amountOfCustomer, 1) : customerIds.splice(rndNumber(customerIds.length), 1)[0] || customerIds[0],
             orderItems: [orderItem1, orderItem2]
-=======
-            customerId: id
->>>>>>> c0708f28ac27eeb7eddb56a0a60164e293c12547
         })
     }
     return { orders, orderItems };
@@ -111,7 +97,7 @@ function createProduct(i: number, categoryId: number | null = null): IProduct {
 }
 
 function createProducts(amount: number, categories?: IProductCategory[]): IProduct[] {
-    const arr = [];
+    const arr: IProduct[] = [];
 
     if (Array.isArray(categories)) {
         for (let i = 0; i < amount; i++) {
@@ -132,7 +118,7 @@ function createProductCategory(i: number): IProductCategory {
 }
 
 function createProductCategories(amount: number): IProductCategory[] {
-    const arr = [];
+    const arr: IProductCategory[] = [];
     for (let i = 0; i < amount; i++) {
         arr.push(createProductCategory(i + 1));
     }
