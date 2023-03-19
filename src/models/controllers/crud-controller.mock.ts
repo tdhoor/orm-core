@@ -1,10 +1,9 @@
-import { TestResultResponse } from "../test-result-response.model";
 import Express from "express";
 
-export interface ICrudController<T> {
+export interface ICrudController {
     /**
      * POST /api/endpoint
-     * @param data 
+     * @body data
      */
     createOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
@@ -18,12 +17,12 @@ export interface ICrudController<T> {
     getAll(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
      * UPDATE /api/endpoint
-     * @param data 
+     * @body data 
      */
     updateOne(req: Express.Request, res: Express.Response, next: Express.NextFunction);
     /**
-     * DELETE /api/endpoint
-     * @param data 
+     * DELETE /api/endpoint/:id
+     * @param id 
      */
     deleteOneById(req: Express.Request, res: Express.Response, next: Express.NextFunction);
 }

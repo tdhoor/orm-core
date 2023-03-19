@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { ICrudController } from './crud-controller.mock';
-import { IProduct } from '../entities/product.model';
 
-export interface IProductController extends ICrudController<IProduct> {
+export interface IProductController extends ICrudController {
     /**
      * GET /products/category?name=categoryName
      * @param name 
