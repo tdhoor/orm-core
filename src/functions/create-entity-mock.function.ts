@@ -77,7 +77,7 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
 
         orders.push({
             totalPrice: (orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price),
-            customerId: amountOfCustomer ? rndNumber(amountOfCustomer, 1) : customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
+            customerId: amountOfCustomer ? rndNumber(amountOfCustomer - 1, 1) : customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
             orderItems: [orderItem1, orderItem2]
         })
     }
@@ -101,7 +101,7 @@ function createProducts(amount: number, categories?: IProductCategory[]): IProdu
 
     if (Array.isArray(categories)) {
         for (let i = 0; i < amount; i++) {
-            arr.push(createProduct(i + 1, rndNumber(categories.length) + 1));
+            arr.push(createProduct(i + 1, rndNumber(categories.length - 1, 1)));
         }
     } else {
         for (let i = 0; i < amount; i++) {
