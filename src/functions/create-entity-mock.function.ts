@@ -63,17 +63,17 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
     }
 
     for (let i = 0; i < amount; i++) {
-        const [rnd1, rnd2] = rndTuble(products.length);
+        const [rnd1, rnd2] = rndTuble(products.length, 1);
 
         const product1 = products[rnd1];
         const product2 = products[rnd2];
 
-        const orderItem1: IOrderItem = { quantity: rndNumber(5), productId: rnd1 + 1 }
-        const orderItem2: IOrderItem = { quantity: rndNumber(5), productId: rnd2 + 1 }
+        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1 }
+        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1 }
 
         arr.push({
             totalPrice: (orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price),
-            customerId: amountOfCustomer ? rndNumber(amountOfCustomer) + 1 : customerIds.splice(rndNumber(customerIds.length), 1)[0],
+            customerId: amountOfCustomer ? rndNumber(amountOfCustomer, 1) : customerIds.splice(rndNumber(customerIds.length), 1)[0],
             orderItems: [orderItem1, orderItem2]
         })
     }
@@ -83,7 +83,7 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
 function createProduct(i: number, category?: IProductCategory): IProduct {
     const product: IProduct = {
         name: `name ${i}`,
-        price: rndNumber(10000) / 100,
+        price: rndNumber(10000, 1) / 100,
         description: `description ${i}`
     };
     if (category) {
