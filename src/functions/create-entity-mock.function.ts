@@ -25,7 +25,7 @@ function createAddresses(amount: number): IAddress[] {
         customerIds.push(i + 1);
     }
     for (let i = 0; i < amount; i++) {
-        let id = customerIds.splice(rndNumber(customerIds.length), 1)[0] || customerIds[0];
+        let id = customerIds.splice(rndNumber(customerIds.length))[0] || customerIds[0];
         arr.push(createAddress(i + 1, id));
     }
     return arr;
@@ -67,7 +67,7 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
     }
 
     for (let i = 0; i < amount; i++) {
-        const [rnd1, rnd2] = rndTuble(products.length, 1);
+        const [rnd1, rnd2] = rndTuble(products.length - 1);
 
         const product1 = products[rnd1];
         const product2 = products[rnd2];
