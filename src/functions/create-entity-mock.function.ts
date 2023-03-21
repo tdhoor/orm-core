@@ -97,7 +97,7 @@ function createOrders(amount: number, amountOfCustomers: number, products: IProd
             customerId: customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
         }
 
-        if (seperateOrderItems) {
+        if (!seperateOrderItems) {
             order.orderItems = [orderItem1, orderItem2];
         } else {
             orderItems.push(orderItem1, orderItem2);
