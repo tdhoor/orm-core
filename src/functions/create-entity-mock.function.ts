@@ -12,10 +12,8 @@ function createAddress(i: number, customerId: number | null = null): IAddress {
         city: `city ${i}`,
         country: `country ${i}`,
         street: `street ${i}`,
-        zipCode: `zipCode ${i}`
-    }
-    if (customerId) {
-        address.customerId = customerId;
+        zipCode: `zipCode ${i}`,
+        customerId: customerId !== null ? customerId : i
     }
     return address;
 }

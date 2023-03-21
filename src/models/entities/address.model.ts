@@ -6,6 +6,6 @@ export interface IAddress {
     city: string
     zipCode: string
     country: string
-    customerId?: number
+    customerId: number
     customer?: ICustomer
 }
