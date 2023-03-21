@@ -72,8 +72,8 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
         const product1 = products[rnd1];
         const product2 = products[rnd2];
 
-        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1 }
-        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1 }
+        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1, orderId: i + 1 }
+        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1, orderId: i + 1 }
 
         orderItems.push(orderItem1, orderItem2);
 
