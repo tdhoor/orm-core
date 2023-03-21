@@ -57,6 +57,7 @@ function createIds(amount: number, maxId: number) {
 export const createTestData = {
     create: {
         products: createProducts,
+        customers: createCustomers,
         customersWithAddress: createCustomersWithAddress,
         orders: createOrders
     },
