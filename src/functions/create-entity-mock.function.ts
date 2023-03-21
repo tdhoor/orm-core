@@ -86,7 +86,7 @@ function createOrders(amount: number, customerIds: number[] = [], products: IPro
             customerId: customerIds[i],
         }
 
-        if (seperateOrderItems) {
+        if (!seperateOrderItems) {
             order.orderItems = [orderItem1, orderItem2];
         } else {
             orderItems.push(orderItem1, orderItem2);
