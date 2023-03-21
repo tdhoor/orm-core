@@ -8,21 +8,29 @@ import { IOrderItem } from "../models/entities/order-item.model";
 import { rndTuble } from "./rnd-tuble.function";
 
 function createAddress(i: number, customerId: number | null = null): IAddress {
-    const address: IAddress = {
+    const address: Partial<IAddress> = {
         city: `city ${i}`,
         country: `country ${i}`,
         street: `street ${i}`,
-        zipCode: `zipCode ${i}`,
-        customerId: customerId !== null ? customerId : i
+        zipCode: `zipCode ${i}`
     }
-    return address;
+    if (customerId) {
+        address.customerId = customerId;
+    }
+    return address as IAddress;
 }
 
-function createAddresses(amount: number): IAddress[] {
+function createAddresses(amount: number, customers: ICustomer[] = []): IAddress[] {
     const arr: IAddress[] = [];
 
-    for (let i = 0; i < amount; i++) {
-        arr.push(createAddress(i + 1));
+    if (customers.length > 0) {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createAddress(i + 1, i + 1));
+        }
+    } else {
+        for (let i = 0; i < amount; i++) {
+            arr.push(createAddress(i + 1));
+        }
     }
     return arr;
 }
@@ -38,10 +46,10 @@ function createCustomer(i: number): ICustomer {
     return customer;
 }
 
-function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
+function createCustomers(amount: number, addresses: IAddress[] = []): ICustomer[] {
     const arr: ICustomer[] = [];
 
-    if (Array.isArray(addresses)) {
+    if (addresses.length === amount) {
         for (let i = 0; i < amount; i++) {
             const customer = createCustomer(i + 1);
             customer.address = addresses[i];
@@ -55,13 +63,19 @@ function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
     return arr;
 }
 
-function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[] = [], includeOrderItems = true): { orders: IOrder[], orderItems: IOrderItem[] } {
+function createOrders(amount: number, amountOfCustomers: number, products: IProduct[] = [], { seperateOrderItems, addOrderIdToOrderItem } = { seperateOrderItems: true, addOrderIdToOrderItem: false }): { orders: IOrder[], orderItems: IOrderItem[] } {
     const customerIds: number[] = [];
     const orders: IOrder[] = [];
     const orderItems: IOrderItem[] = [];
 
-    for (let i = 0; i < amount; i++) {
-        customerIds.push(i + 1);
+    if (amountOfCustomers > 0) {
+        for (let i = 0; i < amountOfCustomers; i++) {
+            customerIds.push(i + 1);
+        }
+    } else {
+        for (let i = 0; i < amount; i++) {
+            customerIds.push(rndNumber(amount, 1));
+        }
     }
 
     for (let i = 0; i < amount; i++) {
@@ -70,18 +84,23 @@ function createOrders(amount: number, amountOfCustomer = 0, products: IProduct[]
         const product1 = products[rnd1];
         const product2 = products[rnd2];
 
-        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1, orderId: i + 1 }
-        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1, orderId: i + 1 }
+        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1 }
+        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1 }
 
-        orderItems.push(orderItem1, orderItem2);
+        if (addOrderIdToOrderItem) {
+            orderItem1.orderId = i + 1;
+            orderItem2.orderId = i + 1;
+        }
 
         const order: IOrder = {
             totalPrice: Math.floor((orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price) * 100) / 100,
-            customerId: amountOfCustomer ? rndNumber(amountOfCustomer - 1, 1) : customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
+            customerId: customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
         }
 
-        if (includeOrderItems) {
+        if (seperateOrderItems) {
             order.orderItems = [orderItem1, orderItem2];
+        } else {
+            orderItems.push(orderItem1, orderItem2);
         }
         orders.push(order);
     }
@@ -100,10 +119,10 @@ function createProduct(i: number, categoryId: number | null = null): IProduct {
     return product;
 }
 
-function createProducts(amount: number, categories?: IProductCategory[]): IProduct[] {
+function createProducts(amount: number, categories: IProductCategory[] = []): IProduct[] {
     const arr: IProduct[] = [];
 
-    if (Array.isArray(categories)) {
+    if (categories.length > 0) {
         for (let i = 0; i < amount; i++) {
             arr.push(createProduct(i + 1, rndNumber(categories.length - 1, 1)));
         }

@@ -17,18 +17,13 @@ function createProducts(amount: number) {
 
 function createOrders(amount: number, amountOfCustomer: number, amountOfProducts: number) {
     const products = createMock.products(amountOfProducts);
-    return createMock.orders(amount, amountOfCustomer, products);
+    return createMock.orders(amount, amountOfCustomer, products, { seperateOrderItems: false, addOrderIdToOrderItem: true });
 }
 
 function createCategoryNames(amount: number, amountOfCategories: number) {
     const categories = createMock.productCategories(amountOfCategories);
     const set = rndNumberSet(amount, amountOfCategories);
     return Array.from(set.values()).map((rnd) => categories[rnd].name);
-}
-
-function createCustomerIds(amount: number, amountOfCustomers: number) {
-    const set = rndNumberSet(amount, amountOfCustomers, 1);
-    return Array.from(set.values());
 }
 
 function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
@@ -53,34 +48,30 @@ function createProductCategoriesWithNewNames(amount: number, maxId: number) {
     })
 }
 
-function createCustomerIdsToDelete(amount: number, maxId: number) {
-    const set = rndNumberSet(amount, maxId, 1);
-    return Array.from(set.values());
-}
-
-function createOrderIdsToDelete(amount: number, maxId: number) {
+function createIds(amount: number, maxId: number) {
     const set = rndNumberSet(amount, maxId, 1);
     return Array.from(set.values());
 }
 
 export const createTestData = {
     create: {
-        customers: createCustomers,
         products: createProducts,
         customersWithAddress: createCustomersWithAddress,
         orders: createOrders
     },
     read: {
         categoryNames: createCategoryNames,
-        customerIds: createCustomerIds
+        customerIds: createIds,
+        productIds: createIds
     },
     update: {
         customers: createCustomersWithNewTelefonNumbers,
         productCategories: createProductCategoriesWithNewNames
     },
     delete: {
-        customerIds: createCustomerIdsToDelete,
-        orderIds: createOrderIdsToDelete
+        addressIds: createIds,
+        customerIds: createIds,
+        orderIds: createIds
     },
     bulk: {
         customers: createCustomers,
