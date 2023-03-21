@@ -8,25 +8,23 @@ import { IOrderItem } from "../models/entities/order-item.model";
 import { rndTuble } from "./rnd-tuble.function";
 
 function createAddress(i: number, customerId: number | null = null): IAddress {
-    return {
+    const address: IAddress = {
         city: `city ${i}`,
         country: `country ${i}`,
         street: `street ${i}`,
-        zipCode: `zipCode ${i}`,
-        customerId: customerId !== null ? customerId : (i + 1)
+        zipCode: `zipCode ${i}`
     }
+    if (customerId) {
+        address.customerId = customerId;
+    }
+    return address;
 }
 
 function createAddresses(amount: number): IAddress[] {
     const arr: IAddress[] = [];
-    const customerIds: number[] = [];
 
     for (let i = 0; i < amount; i++) {
-        customerIds.push(i + 1);
-    }
-    for (let i = 0; i < amount; i++) {
-        let id = customerIds.splice(rndNumber(customerIds.length - 1), 1)[0];
-        arr.push(createAddress(i + 1, id));
+        arr.push(createAddress(i + 1));
     }
     return arr;
 }
@@ -47,7 +45,9 @@ function createCustomers(amount: number, addresses?: IAddress[]): ICustomer[] {
 
     if (Array.isArray(addresses)) {
         for (let i = 0; i < amount; i++) {
-            arr.push(createCustomer(i + 1));
+            const customer = createCustomer(i + 1);
+            customer.address = addresses[i];
+            arr.push(customer);
         }
     } else {
         for (let i = 0; i < amount; i++) {
