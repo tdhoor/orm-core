@@ -5,7 +5,6 @@ import { IProduct } from "../models/entities/product.model";
 import { IProductCategory } from "../models/entities/product-category.model";
 import { rndNumber } from "./rnd-number.function";
 import { IOrderItem } from "../models/entities/order-item.model";
-import { rndTuble } from "./rnd-tuble.function";
 
 function createAddress(i: number, customerId: number | null = null): IAddress {
     const address: Partial<IAddress> = {
@@ -63,29 +62,19 @@ function createCustomers(amount: number, addresses: IAddress[] = []): ICustomer[
     return arr;
 }
 
-function createOrders(amount: number, amountOfCustomers: number, products: IProduct[] = [], { seperateOrderItems, addOrderIdToOrderItem } = { seperateOrderItems: true, addOrderIdToOrderItem: false }): { orders: IOrder[], orderItems: IOrderItem[] } {
-    const customerIds: number[] = [];
+function createOrders(amount: number, customerIds: number[] = [], products: IProduct[] = [], { seperateOrderItems, addOrderIdToOrderItem } = { seperateOrderItems: true, addOrderIdToOrderItem: false }): { orders: IOrder[], orderItems: IOrderItem[] } {
     const orders: IOrder[] = [];
     const orderItems: IOrderItem[] = [];
 
-    if (amountOfCustomers > 0) {
-        for (let i = 0; i < amountOfCustomers; i++) {
-            customerIds.push(i + 1);
-        }
-    } else {
-        for (let i = 0; i < amount; i++) {
-            customerIds.push(rndNumber(amount, 1));
-        }
-    }
+    let productIndex1 = 0;
+    let productIndex2 = products.length - 1;
 
     for (let i = 0; i < amount; i++) {
-        const [rnd1, rnd2] = rndTuble(products.length - 1);
+        const product1 = products[productIndex1];
+        const product2 = products[productIndex2];
 
-        const product1 = products[rnd1];
-        const product2 = products[rnd2];
-
-        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd1 + 1 }
-        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: rnd2 + 1 }
+        const orderItem1: IOrderItem = { quantity: rndNumber(5, 1), productId: productIndex1 + 1 }
+        const orderItem2: IOrderItem = { quantity: rndNumber(5, 1), productId: productIndex2 + 1 }
 
         if (addOrderIdToOrderItem) {
             orderItem1.orderId = i + 1;
@@ -94,7 +83,7 @@ function createOrders(amount: number, amountOfCustomers: number, products: IProd
 
         const order: IOrder = {
             totalPrice: Math.floor((orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price) * 100) / 100,
-            customerId: customerIds.splice(rndNumber(customerIds.length - 1), 1)[0],
+            customerId: customerIds[i],
         }
 
         if (seperateOrderItems) {
@@ -103,6 +92,9 @@ function createOrders(amount: number, amountOfCustomers: number, products: IProd
             orderItems.push(orderItem1, orderItem2);
         }
         orders.push(order);
+
+        productIndex1++;
+        productIndex2--;
     }
     return { orders, orderItems };
 }
@@ -110,7 +102,7 @@ function createOrders(amount: number, amountOfCustomers: number, products: IProd
 function createProduct(i: number, categoryId: number | null = null): IProduct {
     const product: IProduct = {
         name: `name ${i}`,
-        price: rndNumber(10000, 1) / 100,
+        price: i / 100,
         description: `description ${i}`
     };
     if (categoryId !== null) {
@@ -124,7 +116,7 @@ function createProducts(amount: number, categories: IProductCategory[] = []): IP
 
     if (categories.length > 0) {
         for (let i = 0; i < amount; i++) {
-            arr.push(createProduct(i + 1, rndNumber(categories.length - 1, 1)));
+            arr.push(createProduct(i + 1, (i % categories.length) + 1));
         }
     } else {
         for (let i = 0; i < amount; i++) {

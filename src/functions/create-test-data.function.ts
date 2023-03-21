@@ -17,7 +17,8 @@ function createProducts(amount: number) {
 
 function createOrders(amount: number, amountOfCustomer: number, amountOfProducts: number) {
     const products = createMock.products(amountOfProducts);
-    return createMock.orders(amount, amountOfCustomer, products, { seperateOrderItems: false, addOrderIdToOrderItem: true });
+    const customerIds = createIds(amountOfCustomer, amountOfProducts);
+    return createMock.orders(amount, customerIds, products, { seperateOrderItems: false, addOrderIdToOrderItem: true });
 }
 
 function createCategoryNames(amount: number, amountOfCategories: number) {
