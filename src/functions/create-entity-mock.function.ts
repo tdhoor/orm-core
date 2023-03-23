@@ -82,7 +82,7 @@ function createOrders(amount: number, customerIds: number[] = [], products: IPro
         }
 
         const order: IOrder = {
-            totalPrice: Math.floor((orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price) * 100) / 100,
+            totalPrice: Math.floor(((orderItem1.quantity * product1.price) + (orderItem2.quantity * product2.price)) * 100) / 100,
             customerId: customerIds[i],
         }
 
