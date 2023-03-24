@@ -4,7 +4,7 @@ export async function execTest<T>(fn: () => Promise<T>, countFn: () => Promise<{
     const start = performance.now();
     const data = await fn();
     const end = performance.now();
-    const size = await countFn();
+    const size = {};
 
     return {
         time: Math.round((end - start) * 100) / 100,
