@@ -23,7 +23,7 @@ function createOrders(amount: number, amountOfCustomer: number, amountOfProducts
 
 function createCategoryNames(amount: number, amountOfCategories: number) {
     const categories = createMock.productCategories(amountOfCategories);
-    const set = rndNumberSet(amount, amountOfCategories);
+    const set = rndNumberSet(amount, amountOfCategories - 1);
     return Array.from(set.values()).map((rnd) => categories[rnd].name);
 }
 
