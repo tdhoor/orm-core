@@ -1,4 +1,4 @@
-function bulkInsertMysql<T>(pool, table: string, values: T[]): Promise<void> {
+export function bulkInsertMysql<T>(pool, table: string, values: T[]): Promise<void> {
     const keys = Object.keys(values[0]);
     const tableName = "`" + table + "`";
     const query = `INSERT INTO ${tableName} (${keys.join(', ')}) VALUES ?`;
