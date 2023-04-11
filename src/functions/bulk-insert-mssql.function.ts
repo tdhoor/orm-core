@@ -1,6 +1,4 @@
-import sql from 'mssql';
-
-export async function bukdInsertMssql(tableName, values: any[]) {
+export async function bulkInsertMssql(sql, tableName, values: any[]) {
     const pool = new sql.ConnectionPool({
         user: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
