@@ -100,6 +100,10 @@ export async function bulkInsertMssql(sql, tableName, values: any[]) {
                 table.columns.add(column, sql.Text, {
                     nullable: false,
                 });
+            } else if (column.toLocaleLowerCase().includes("at")) {
+                table.columns.add(column, sql.DateTime, {
+                    nullable: false
+                })
             }
         });
         // Add each row of values to the table object
