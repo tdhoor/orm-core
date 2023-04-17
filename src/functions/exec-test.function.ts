@@ -1,6 +1,6 @@
 import { TestResultResponse } from "../models/test-result-response.model";
 
-export async function execTest<T>(fn: () => Promise<T>, countFn: () => Promise<{ [k: string]: number }>): Promise<TestResultResponse<T>> {
+export async function execTest<T>(fn: () => Promise<T>): Promise<TestResultResponse<T>> {
     const start = performance.now();
     const data = await fn();
     const end = performance.now();
