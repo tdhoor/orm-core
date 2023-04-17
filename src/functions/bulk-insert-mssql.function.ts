@@ -5,8 +5,9 @@ export async function bulkInsertMssql(sql, tableName, values: any[]) {
         server: process.env.DB_HOST,
         port: +process.env.DB_PORT,
         database: process.env.DB_NAME,
+        requestTimeout: 900000,
         options: {
-            trustServerCertificate: true
+            trustServerCertificate: true,
         },
         pool: {
             min: 1,
