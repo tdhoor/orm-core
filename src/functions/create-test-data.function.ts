@@ -23,8 +23,8 @@ function createOrders(amount: number, amountOfCustomer: number, amountOfProducts
 
 function createCategoryNames(amount: number, amountOfCategories: number) {
     const categories = createMock.productCategories(amountOfCategories);
-    const set = rndNumberSet(amount, amountOfCategories - 1);
-    return Array.from(set.values()).map((rnd) => categories[rnd].name);
+    const arr = rndNumberArray(amount, amountOfCategories - 1, 1);
+    return arr.map((rnd) => categories[rnd].name);
 }
 
 function createCustomersWithNewTelefonNumbers(amount: number, maxId: number) {
